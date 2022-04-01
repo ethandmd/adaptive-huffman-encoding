@@ -50,6 +50,7 @@ Huffman::decode(bool bit) {
     } else {
         next_node = bit_to_child_(tmp_node_, bit);
     }
+    assert(next_node);      //Sanity check.
     d_symbol = next_node->get_key();        //Get possibly valid symbol from htree search.
 
     if (d_symbol >= 0) {
