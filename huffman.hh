@@ -38,5 +38,4 @@ class Huffman {
 
   private:
   int frequency_table_[ALPHABET_SIZE];    //Frequency table is initially all zeroes, set HEOF to 1 in constructor.
-  HForest hforest_(HForest::hforest_container_t);
 };
