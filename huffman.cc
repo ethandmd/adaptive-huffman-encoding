@@ -18,7 +18,7 @@ Huffman::encode(int symbol) {
     bits_t bit_encoding;
 
     //Build htree and get symbol path.
-    HTree::tree_ptr_t htree = build_huffman_tree();
+    HTree::tree_ptr_t htree = build_huffman_tree_();
     HTree::possible_path_t path = htree->path_to(symbol);
 
     //Build bit-encoding from path.
@@ -38,7 +38,28 @@ Huffman::encode(int symbol) {
 
 int
 Huffman::decode(bool bit) {
-    
+    HTree::tree_ptr_t next_node;
+    int d_symbol;
+
+    //If this is the first bit in a sequence, begin
+    //from the root node. Otherwise, start where
+    //the previous bit instruction left off.
+    if (!tmp_node_) {
+        HTree::tree_ptr_t htree = build_huffman_tree_();
+        next_node = bit_to_child_(htree, bit);
+    } else {
+        next_node = bit_to_child_(tmp_node_, bit);
+    }
+    d_symbol = next_node->get_key();        //Get possibly valid symbol from htree search.
+
+    if (d_symbol >= 0) {
+        frequency_table_[d_symbol]++;       //Increment freq table with decoded symbol.
+        tmp_node_ = nullptr;        //Reset placeholder node state.
+        return d_symbol;
+    } else {
+        tmp_node_ = next_node;      //Update tmp_node_.
+        return -1;
+    }
 }
 
 /*
@@ -47,7 +68,7 @@ Huffman::decode(bool bit) {
 * iteratively merge HTrees in the forest until there is one tree left.
 */
 HTree::tree_ptr_t
-Huffman::build_huffman_tree() {    
+Huffman::build_huffman_tree_() {    
     
     HForest hforest;
     //Iterate through every symbol in the alphabet and create 
@@ -74,3 +95,18 @@ Huffman::build_huffman_tree() {
     return hforest.pop_tree();
 }
 
+/*
+*   Helper function for Huffman::Decode().
+*   Gets the next key in the htree from a single bit.
+*/
+HTree::tree_ptr_t
+Huffman::bit_to_child_(HTree::tree_ptr_t node, int bit) {
+    const auto L = HTree::Direction::LEFT;
+    const auto R = HTree::Direction::RIGHT;
+
+    if (bit) {
+        return node->get_child(R);
+    } else {
+        return node->get_child(L);
+    }
+}
