@@ -24,10 +24,7 @@ public:
             value_t value,
             tree_ptr_t left = nullptr,
             tree_ptr_t right = nullptr) : key_(key), value_(value), left_(left), right_(right) 
-            {
-                  assert(key);
-                  assert(value);
-            }
+            {}
       ~HTree()=default;
 
       key_t get_key() const { return key_; };            // Return key in current node
