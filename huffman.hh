@@ -19,7 +19,7 @@ class Huffman {
 
   using bits_t = std::vector<bool>;
 
-  Huffman() {};
+  Huffman();
   ~Huffman() = default;
   Huffman(const Huffman&) = delete;
   Huffman(Huffman&&) = delete;
@@ -29,7 +29,7 @@ class Huffman {
   // Encode a symbol into a sequence of bits, then update frequency table.
   bits_t encode(int symbol);
 
-  // Decode a single bit into a symbol. If no symbol can be unmabiguously decoded
+  // Decode a single bit into a symbol. If no symbol can be unambiguously decoded
   // without additional bits, returns a negative value.
   // Subsequent calls with more bits should eventually resolve to either
   // a character symbol or HEOF.
@@ -37,7 +37,7 @@ class Huffman {
   int decode(bool bit);
 
   private:
-  int frequency_table_[ALPHABET_SIZE];    //Frequency table is initially all zeroes, set HEOF to 1 in constructor.
+  int frequency_table_[ALPHABET_SIZE] = {};    //Frequency table is initially all zeroes, set HEOF to 1 in constructor.
 
   HTree::tree_ptr_t build_huffman_tree();    //Build a Huffman tree from scratch
 };

@@ -15,7 +15,6 @@ Huffman::Huffman() {
 Huffman::bits_t
 Huffman::encode(int symbol) {
     const auto L = HTree::Direction::LEFT;
-    const auto R = HTree::Direction::RIGHT;
     bits_t bit_encoding;
 
     //Build htree and get symbol path.
@@ -35,6 +34,11 @@ Huffman::encode(int symbol) {
     frequency_table_[symbol]++;
 
     return bit_encoding;
+}
+
+int
+Huffman::decode(bool bit) {
+    
 }
 
 /*
@@ -60,7 +64,7 @@ Huffman::build_huffman_tree() {
         hforest.add_tree(HTree::tree_ptr_t(
             new HTree(
                 -1, //Synthetic key for merged tree
-                tree1->get_value() + tree2->get_value(), //Merged frequency is the combined sum
+                tree1->get_value() + tree2->get_value(), //Merged frequency is childs sum
                 tree1,  //Left child is tree1
                 tree2   //Right child is tree2
                 )));
