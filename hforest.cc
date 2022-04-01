@@ -35,15 +35,6 @@ HForest::heapify()
     }
 }
 
-/*
-*   Constructor for HForest. Accepts a std::vector of pointers to HTrees
-*   and creates a heap.
-*/
-HForest::HForest(hforest_container_t forest) : forest_(forest)
-    {
-        heapify();
-    }
-
 HForest::size_t
 HForest::size() const 
 {

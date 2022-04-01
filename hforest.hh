@@ -18,11 +18,10 @@ class HForest {
     /* Main types */
     using hforest_element_t = HTree::tree_ptr_t;
     using hforest_container_t = std::vector<hforest_element_t>;
-    using hforest_t = std::shared_ptr<HForest>;
     using size_t = int;
 
     /* Constructor */
-    HForest(hforest_container_t forest);
+    HForest() = default;
 
     /* Destructor */
     ~HForest() = default;
