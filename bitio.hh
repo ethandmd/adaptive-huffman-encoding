@@ -18,10 +18,11 @@ class BitInput {
 
   // Read a single bit (or trailing zero)
   // Allowed to crash or throw an exception if called past end-of-file.
-  bool input_bit() { return is_.get(); };
+  bool input_bit();
 
   private:
   std::istream& is_;
+  int chars_extracted_ = 0;
 };
 
 // BitOutput: Write a single bit at a time to an output stream
@@ -41,7 +42,7 @@ class BitOutput {
   BitOutput& operator=(BitOutput&&) = default;
 
   // Output a single bit (buffered)
-  void output_bit(bool bit) { os_ << bit; };
+  void output_bit(bool bit);
 
   private:
   std::ostream& os_;
