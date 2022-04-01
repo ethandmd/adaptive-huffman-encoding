@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "htree.hh"
+#include "hforest.hh"
 
 class Huffman {
  public:
@@ -18,8 +19,8 @@ class Huffman {
 
   using bits_t = std::vector<bool>;
 
-  Huffman();
-  ~Huffman();
+  Huffman() {};
+  ~Huffman() = default;
   Huffman(const Huffman&) = delete;
   Huffman(Huffman&&) = delete;
   Huffman& operator=(const Huffman&) = delete;
@@ -34,4 +35,8 @@ class Huffman {
   // a character symbol or HEOF.
   // Finally, updates the frequency table with this additional symbol.
   int decode(bool bit);
+
+  private:
+  int frequency_table_[ALPHABET_SIZE];    //Frequency table is initially all zeroes, set HEOF to 1 in constructor.
+  HForest hforest_(HForest::hforest_container_t);
 };
