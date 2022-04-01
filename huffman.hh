@@ -38,4 +38,6 @@ class Huffman {
 
   private:
   int frequency_table_[ALPHABET_SIZE];    //Frequency table is initially all zeroes, set HEOF to 1 in constructor.
+
+  HTree::tree_ptr_t build_huffman_tree();    //Build a Huffman tree from scratch
 };
