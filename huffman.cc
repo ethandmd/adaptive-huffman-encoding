@@ -50,8 +50,8 @@ Huffman::decode(bool bit) {
     } else {
         next_node = bit_to_child_(tmp_node_, bit);
     }
-    assert(next_node);      //Sanity check.
-    d_symbol = next_node->get_key();        //Get possibly valid symbol from htree search.
+    //next_node is checked for validity in bit_to_child().
+    d_symbol = next_node->get_key();        //Get possibly valid symbol from htree search
 
     if (d_symbol >= 0) {
         frequency_table_[d_symbol]++;       //Increment freq table with decoded symbol.
@@ -83,6 +83,9 @@ Huffman::build_huffman_tree_() {
         //Get the two least frequent symbols
         HTree::tree_ptr_t tree1 = hforest.pop_tree();
         HTree::tree_ptr_t tree2 = hforest.pop_tree();
+
+        assert(tree1); assert(tree2);       //Sanity check.
+        
         hforest.add_tree(HTree::tree_ptr_t(
             new HTree(
                 -1, //Synthetic key for merged tree
@@ -104,6 +107,8 @@ HTree::tree_ptr_t
 Huffman::bit_to_child_(HTree::tree_ptr_t node, int bit) {
     const auto L = HTree::Direction::LEFT;
     const auto R = HTree::Direction::RIGHT;
+
+    assert(node);       //Sanity check.
 
     if (bit) {
         return node->get_child(R);
