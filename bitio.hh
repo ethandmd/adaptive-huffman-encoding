@@ -22,7 +22,8 @@ class BitInput {
 
   private:
   std::istream& is_;
-  int chars_extracted_ = 0;
+  char buff_;
+  uint8_t bit_count_ = 0;
 };
 
 // BitOutput: Write a single bit at a time to an output stream
@@ -46,5 +47,7 @@ class BitOutput {
 
   private:
   std::ostream& os_;
+  char buff_;
+  uint8_t bit_count = 0;
 };
 

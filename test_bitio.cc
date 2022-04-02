@@ -16,7 +16,7 @@ test_1_bit()
   {
     BitOutput bito(bits);
     bito.output_bit(1);
-  } // Need to call bito's destructor here
+  }
 
   BitInput biti(bits);
   assert(biti.input_bit() == true);
