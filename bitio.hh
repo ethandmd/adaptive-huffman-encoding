@@ -21,8 +21,8 @@ class BitInput {
   bool input_bit();
 
   private:
-  std::istream& is_;
-  char buff_;
+  std::istream& is_;                 //Input stream reference.
+  char buff_ = 0;                    //Buffer to receive on byte from istream.
   uint8_t bit_count_ = 0;
 };
 
@@ -35,7 +35,7 @@ class BitOutput {
   {}
 
   // Flushes out any remaining output bits and trailing zeros, if any:
-  ~BitOutput() = default;
+  ~BitOutput();
 
   BitOutput(const BitOutput&) = default;
   BitOutput(BitOutput&&) = default;
@@ -47,7 +47,7 @@ class BitOutput {
 
   private:
   std::ostream& os_;
-  char buff_;
-  uint8_t bit_count = 0;
+  char buff_ = 0;
+  uint8_t bit_count_ = 0;
 };
 
