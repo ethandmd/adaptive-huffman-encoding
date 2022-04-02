@@ -24,17 +24,6 @@ HForest::is_a_heap() const
     return std::is_heap(forest_.begin(), forest_.end(), compare_htrees{});
 }
 
-/*
-*   Private helper function that relies on std::make_heap().
-*/
-void
-HForest::heapify()
-{
-    if (!is_a_heap()) {
-        std::make_heap(forest_.begin(), forest_.end(), compare_htrees{});
-    }
-}
-
 HForest::size_t
 HForest::size() const 
 {
@@ -45,12 +34,12 @@ HForest::size() const
 void
 HForest::add_tree(HTree::tree_ptr_t new_tree)
 {
-    //Ensure new_tree is not nullptr. (This will break heapify().)
+    //Ensure new_tree is not nullptr.
     if (!new_tree) { return; }
     //Add ptr to new tree at the end of the vector.
     forest_.push_back(new_tree);
-    //Call heapify to maintain min-heap invariant.
-    heapify();
+    //Call push_heap() to maintain min-heap invariant.
+    std::push_heap(forest_.begin(), forest_.end(), compare_htrees{});
 }
 
 HTree::tree_ptr_t
