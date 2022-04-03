@@ -61,9 +61,10 @@ toggle_bit(uint8_t &buff, bool bit, int k) {
 *       output_bit(1);
 *       output_bit(1);
 *       output_bit(0);
+*       output_bit(1);
 *   
 *   the buffer would look like:
-*       00000011.
+*       00001011.
 */
 void
 BitOutput::output_bit(bool bit) {

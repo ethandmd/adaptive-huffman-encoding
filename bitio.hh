@@ -23,7 +23,7 @@ class BitInput {
   private:
   std::istream& is_;                    //Input stream reference.
   uint8_t buff_ = 0;                    //Buffer to receive on byte from istream.
-  uint8_t bit_count_ = 8;
+  uint8_t bit_count_ = 8;               
 };
 
 // BitOutput: Write a single bit at a time to an output stream
