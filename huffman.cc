@@ -2,7 +2,7 @@
 #include <cassert>
 
 Huffman::Huffman() {
-    frequency_table_[HEOF] = 1;
+    frequency_table_[HEOF] = 1;             //Set HEOF frequency to 1.
 }
 
 /*
@@ -19,7 +19,7 @@ Huffman::encode(int symbol) {
 
     //Build htree and get symbol path.
     HTree::tree_ptr_t htree = build_huffman_tree_();
-    HTree::possible_path_t path = htree->path_to(symbol);
+    const HTree::possible_path_t path = htree->path_to(symbol);
 
     //Build bit-encoding from path.
     for (auto it = path->begin(); it != path->end(); it++) {
@@ -104,15 +104,15 @@ Huffman::build_huffman_tree_() {
 *   Gets the next key in the htree from a single bit.
 */
 HTree::tree_ptr_t
-Huffman::bit_to_child_(HTree::tree_ptr_t node, int bit) {
+Huffman::bit_to_child_(const HTree::tree_ptr_t node, const int bit) {
     const auto L = HTree::Direction::LEFT;
     const auto R = HTree::Direction::RIGHT;
 
     assert(node);       //Sanity check.
 
     if (bit) {
-        return node->get_child(R);
+        return node->get_child(R);      //"1" corresponds to RIGHT.
     } else {
-        return node->get_child(L);
+        return node->get_child(L);      //"0" corresponds to LEFT.
     }
 }
