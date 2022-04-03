@@ -2,44 +2,47 @@
 #include <cassert>
 #include <iostream>
 
-/*
-*   Inputs a reference to char buffer with bits in R -> L order.
-*   Takes each bit out and reverses order to be in L -> R order
-*   in fmt char buffer.
-*/
-void
-fmt_bits(char &fmt_buff, char &raw_buff) {
-    //Iterate through each bit in raw buff.
-    for (int i = 0; i < 8; i++) {
-        bool lsb = raw_buff & 0x1;             //Extract input's LSB
-        fmt_buff = fmt_buff << 0x1;            //Make room in buffer before
-        fmt_buff |= lsb;                       //setting the buffer LSB.
-        raw_buff = raw_buff >> 0x1;            //Get next bit in input byte.
+BitOutput::~BitOutput() {
+    /*
+    while (bit_count_ <= 7) {
+        output_bit(0);
     }
+    */
+   os_.put(buff_);
 }
 
-BitOutput::~BitOutput() {
-    os_.put(buff_);
-}
+/*
+*   Debugging.
+*/
+void get_buff(uint8_t buff) { 
+    std::cout << "Printing in bits for, " << int(buff) << ": ";
+    for (int i = 7; i > -1; i--) { 
+      bool k = buff & (0x1 << i);
+      std::cout << k << " ";
+      }
+      std::cout << "\n";
+    }
 
 bool
 BitInput::input_bit() {
     //Bit count ranges from [0,8). If bit count is > 7, read in next byte from stream.
-    if (bit_count_ == 0) {
-        //char raw_buff = is_.get();
-        //fmt_bits(buff_, raw_buff);              //Read next byte from istream into buff_
+    if (bit_count_ > 7) {
         buff_ = is_.get();
-        bool lsb = buff_ & 0x1;                 //Extract LSB from formatted buffer.
-        buff_ = buff_ >> 0x1;                   //Shift fmt buffer right for next call.
-        bit_count_ = 8;                         //Reset bit counter.
+        //get_buff(buff_);                  //Visualize the bits.
+        bit_count_ = 0;
+    }
 
-        return lsb;
+    bool k = buff_ & (0x1 << bit_count_);   //Extract LSB from char buffer.
+    bit_count_ += 1;                        //Increment bit counter.
+    return k;
+}
 
+void
+toggle_bit(uint8_t &buff, bool bit, int k) {
+    if (bit) {
+        buff |= 0x1 << k;       //Set the k-th bit.
     } else {
-        bool lsb = buff_ & 0x1;                 //Extract LSB from char buffer.
-        buff_ = buff_ >> 0x1;                   //Shift buff right by one.
-        bit_count_ -= 1;                        //Decrement bit counter.
-        return lsb;
+        buff &= ~(0x1 << k);    //Clear the k-th bit.
     }
 }
 
@@ -47,12 +50,11 @@ void
 BitOutput::output_bit(bool bit) {
     //If bito char buff is full, write byte to ostream.
     if (bit_count_ > 7) {
-        os_.put(buff_);                  //Write fmt buff to ostream.
-        bit_count_ = 0;                  //Reset bit counter.
+        os_.put(buff_);                     //Write buff to ostream.
+        bit_count_ = 0;                     //Reset bit counter.
+        buff_ = 0;                          //Zero out buffer.
 
-    } else {
-        buff_ = buff_ << 0x1;            //Make room for setting next LSB.
-        buff_ |= bit;                    //Set LSB in bito raw buff.
-        bit_count_ += 1;                 //Increment bit counter.
     }
+    toggle_bit(buff_, bit, bit_count_);     //Toggle k-th bit.
+    bit_count_ += 1;                        //Increment bit counter.
 }
