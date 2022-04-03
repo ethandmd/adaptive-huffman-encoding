@@ -14,7 +14,7 @@ BitOutput::~BitOutput() {
 /*
 *   Debugging.
 */
-void get_buff(uint8_t buff) { 
+void get_buff(const uint8_t buff) { 
     std::cout << "Printing in bits for, " << int(buff) << ": ";
     for (int i = 7; i > -1; i--) { 
       bool k = buff & (0x1 << i);
