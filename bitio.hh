@@ -21,7 +21,7 @@ class BitInput {
   bool input_bit();
 
   private:
-  std::istream& is_;                 //Input stream reference.
+  std::istream& is_;                    //Input stream reference.
   uint8_t buff_ = 0;                    //Buffer to receive on byte from istream.
   uint8_t bit_count_ = 8;
 };
@@ -44,7 +44,7 @@ class BitOutput {
 
   // Output a single bit (buffered)
   void output_bit(bool bit);
-  
+
   private:
   std::ostream& os_;
   uint8_t buff_ = 0;

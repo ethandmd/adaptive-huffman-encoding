@@ -23,13 +23,16 @@ void get_buff(uint8_t buff) {
       std::cout << "\n";
     }
 
+/*
+*   Read bits from least significant to most significant.
+*/
 bool
 BitInput::input_bit() {
     //Bit count ranges from [0,8). If bit count is > 7, read in next byte from stream.
     if (bit_count_ > 7) {
         buff_ = is_.get();
         //get_buff(buff_);                  //Visualize the bits.
-        bit_count_ = 0;
+        bit_count_ = 0;                     //Reset bit count.
     }
 
     bool k = buff_ & (0x1 << bit_count_);   //Extract LSB from char buffer.
@@ -37,6 +40,10 @@ BitInput::input_bit() {
     return k;
 }
 
+/*
+*   Set / clear the k-th bit with bit ops. Clearing
+*   a bit requires creating a mask of its complement.
+*/
 void
 toggle_bit(uint8_t &buff, bool bit, int k) {
     if (bit) {
@@ -46,6 +53,18 @@ toggle_bit(uint8_t &buff, bool bit, int k) {
     }
 }
 
+
+/*
+*   If buffer is full (from buffer count), write 8 bits to ostream.
+*   Otherwise, set/clear bit from least to most significant. So if
+*   you did:
+*       output_bit(1);
+*       output_bit(1);
+*       output_bit(0);
+*   
+*   the buffer would look like:
+*       00000011.
+*/
 void
 BitOutput::output_bit(bool bit) {
     //If bito char buff is full, write byte to ostream.
