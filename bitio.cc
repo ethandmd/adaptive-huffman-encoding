@@ -3,11 +3,6 @@
 #include <iostream>
 
 BitOutput::~BitOutput() {
-    /*
-    while (bit_count_ <= 7) {
-        output_bit(0);
-    }
-    */
    os_.put(buff_);
 }
 

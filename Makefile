@@ -17,7 +17,7 @@ test_huffman: test_huffman.o huffman.o hforest.o
 test_hforest: test_hforest.o hforest.o
 	$(CXX) $(LDFLAGS) -o $@ $^
 
-encoder: encoder.o bitio.o huffman.o hforest.o
+encoder: encoder.o bitio.o huffman.o hforest.ozz
 	$(CXX) $(LDFLAGS) -o $@ $^
 
 decoder: decoder.o  bitio.o huffman.o hforest.o
