@@ -3,11 +3,12 @@
 #include <iostream>
 
 BitOutput::~BitOutput() {
-   os_.put(buff_);
+    //Flush buffer on destruction.
+    os_.put(buff_);
 }
 
 /*
-*   Debugging.
+*   This method for debugging only.
 */
 void get_buff(const uint8_t buff) { 
     std::cout << "Printing in bits for, " << int(buff) << ": ";
