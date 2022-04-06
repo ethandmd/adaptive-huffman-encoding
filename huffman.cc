@@ -31,7 +31,7 @@ Huffman::encode(int symbol) {
     }
 
     //Increment frequency table for symbol.
-    frequency_table_[symbol]++;
+    frequency_table_[symbol] += 1;
 
     return bit_encoding;
 }
