@@ -1,4 +1,4 @@
-# CSCI2-hw8 -- Adaptive Huffman Encoding
+# CSCI2-HW8 -- Adaptive Huffman Encoding
 #### Author: Ethan McDonald
 
 ## Design
