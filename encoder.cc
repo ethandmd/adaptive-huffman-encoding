@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     }
 
     std::string output_fname = std::string(argv[1]) + ".comp";
-    std::ofstream ofs (output_fname, std::ofstream::out | std::ios::app);
+    std::ofstream ofs (output_fname, std::ofstream::out);
     BitOutput bito(ofs);
     Huffman encoder;
     //Read chars from input file and encode them.
