@@ -18,25 +18,44 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    std::vector<int> dec_buff;
     std::string output_fname = std::string(argv[1]) + ".plaintext";
     std::ofstream ofs (output_fname, std::ofstream::out | std::ios::app);
     Huffman decoder;
     BitInput biti(ifs);
-    //Read bits from input file and decode them into chars.
+
     while (true) {
-        int symbol;
-        while (true) {
-            bool bit = biti.input_bit();
-            int symbol = decoder.decode(bit);
+        int symbol = -1;
+        while (symbol < 0) {
+            symbol = decoder.decode(biti.input_bit());
             std::cout << char(symbol) << " ";
-            if (symbol < 0) { break; }
         }
-        if (symbol == Huffman::HEOF) { break; } else {
+        //bool bit = biti.input_bit();
+        //int symbol = decoder.decode(bit);
+        if (symbol == Huffman::HEOF) { 
+            std::cout << char(symbol) << "\n";
+            break; 
+        } else {
+            ofs.put(symbol);
+        }
+        //if (symbol > 0) { ofs.put(symbol); }
+    };
+
+    //Read bits from input file and decode them into chars.
+
+    //Eitan's moodle code:
+    /*
+    while (true) {
+        while (symbol > 0) {
+            bool bit = biti.input_bit();
+            symbol = decoder.decode(bit);
+        }
+        //std::cout << char(symbol) << "\n";
+        if (symbol == Huffman::HEOF) { 
+            break; 
+        } else {
             ofs.put(symbol);
             symbol = -1;
-        }
-        std::cout << "\n";
+        }   
     }
-    
+    */
 }
