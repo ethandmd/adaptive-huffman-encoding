@@ -23,17 +23,17 @@ int main(int argc, char *argv[]) {
     BitOutput bito(ofs);
     Huffman encoder;
     //Read chars from input file and encode them.
-    while (true) {
+    while (ifs.good()) {
         char c = ifs.get();
-        if (ifs.eof()) { std::cout << "EOF: "; std::cout << int(c) << "\n"; break; }
-        std::cout << char(c) << ": "; //Debugging.
+        //if (ifs.eof()) { std::cout << "EOF: "; std::cout << int(c) << "\n"; break; }  //Debugging.
+        //std::cout << char(c) << ": "; //Debugging.
         Huffman::bits_t enc = encoder.encode(c);
 
         for (auto b : enc) {
-            std::cout << b << " ";    //Debugging.
+            //std::cout << b << " ";    //Debugging.
             bito.output_bit(b);
         }
-        std::cout << "\n";            //Debugging.
+        //std::cout << "\n";            //Debugging.
     }
     ofs.close();
 
